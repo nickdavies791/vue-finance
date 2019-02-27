@@ -18,20 +18,16 @@ export default {
                 <input class="form-control" type="date" v-model="end">
             </div>
             <div class="form-group">
-                <label>Years</label>
-                <input class="form-control" min="0" type="number" :value="getYears">
-            </div>
-            <div class="form-group">
                 <label>Percentage Depreciation</label>
-                <input class="form-control" type="text" :value="getPercentage">
+                <input class="form-control" type="text" :value="getPercentage" disabled>
             </div>
             <div class="form-group">
                 <label>Net Book Value</label>
-                <input class="form-control" type="text" :value="getYearlyNetBookValue">
+                <input class="form-control" type="text" :value="getYearlyNetBookValue" disabled>
             </div>
             <div class="form-group">
                 <label>Transferred Net Book Value</label>
-                <input class="form-control" type="text" :value="getTransferredNetBookValue">
+                <input class="form-control" type="text" :value="getTransferredNetBookValue" disabled>
             </div>
         </div>
     `,
