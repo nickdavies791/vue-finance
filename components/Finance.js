@@ -10,26 +10,36 @@ export default {
                 <input class="form-control" type="date" v-model="end">
             </div>
             <div class="form-group">
-                <label>Months</label>
-                <input class="form-control" type="number" :value="getMonths">
+                <label>Years</label>
+                <input class="form-control" min="0" type="number" :value="getYears">
+            </div>
+            <div class="form-group">
+                <label>Percentage Depreciation</label>
+                <input class="form-control" type="text" :value="getPercentage">
             </div>
         </div>
     `,
 
     data() {
         return {
-            start: '',
-            end: '',
+            start: '2017-05-19',
+            end: '2020-05-19',
         }
     },
 
     computed: {
-        getMonths() {
+        getYears() {
             let start = moment(this.start);
             let end = moment(this.end);
-            let months = end.diff(start, 'months');
+            let years = end.diff(start, 'years');
 
-            return months;
+            return years;
+        },
+
+        getPercentage() {
+            let percentage = (1 / this.getYears);
+
+            return percentage;
         }
     }
 }
