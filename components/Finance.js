@@ -42,7 +42,7 @@ export default {
     },
 
     methods: {
-        round: function(x) {
+        round(x) {
             return +(Math.round(x + "e+2")  + "e-2");
         },
     },
