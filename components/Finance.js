@@ -6,27 +6,87 @@ export default {
             <div class="form-group">
                 <label>Accounting End Date</label>
                 <input class="form-control" type="date" v-model="account_end">
-            </div>
+            </div><br />
             <div class="form-group">
                 <label>Purchase Cost</label>
                 <input class="form-control" type="text" v-model="cost">
             </div>
-            <div class="form-group">
-                <label>Purchase Date</label>
-                <input class="form-control" type="date" v-model="start">
-            </div>
-            <div class="form-group">
-                <label>End Date</label>
-                <input class="form-control" type="date" v-model="end">
-            </div>
-            <div class="form-group">
-                <label>Annual Depreciation</label>
-                <input class="form-control" type="text" :value="getAnnualDepreciation" disabled>
-            </div>
-            <div class="form-group">
-                <label>Monthly Depreciation</label>
-                <input class="form-control" type="text" :value="getMonthlyDepreciation" disabled>
-            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Purchase Date</label>
+                        <input class="form-control" type="date" v-model="start">
+                    </div>                
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input class="form-control" type="date" v-model="end">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Lifetime (Years)</label>
+                        <input class="form-control" type="number" :value="getYears" disabled>
+                    </div>
+                </div>
+            </div><br />
+            <h5>Costs</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Costs Brought Forward</label>
+                        <input class="form-control" type="text" v-model="costs.bfwd">
+                    </div>                
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Additions</label>
+                        <input class="form-control" type="text" v-model="costs.additions">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Disposals</label>
+                        <input class="form-control" type="text" v-model="costs.disposals">
+                    </div>                
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Costs Carried Forward</label>
+                        <input class="form-control" type="text" v-model="getCostsCfwd">
+                    </div>
+                </div>
+            </div><br />
+            <h5>Depreciation</h5>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Depreciation Brought Forward</label>
+                        <input class="form-control" type="text" v-model="deprec.bfwd">
+                    </div>                
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Charges</label>
+                        <input class="form-control" type="text" :value="getDepreciationCharges">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Disposals</label>
+                        <input class="form-control" type="text" v-model="deprec.disposals">
+                    </div>                
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Depreciation Carried Forward</label>
+                        <input class="form-control" type="text" :value="getDeprecCfwd">
+                    </div>
+                </div>
+            </div><br />
             <div class="form-group">
                 <label>Net Book Value</label>
                 <input class="form-control" type="text" :value="getNetBookValue" disabled>
@@ -51,6 +111,18 @@ export default {
             end: '2022-05-19',
             account_end: '2019-08-31',
             transfer: '2019-08-19',
+            costs: {
+                bfwd: '',
+                additions: '',
+                disposals: '',
+                cfwd: ''
+            },
+            deprec: {
+                bfwd: '',
+                charges: '',
+                disposals: '',
+                cfwd: ''
+            }
         }
     },
 
@@ -86,7 +158,7 @@ export default {
         },
 
         getNetBookValue() {
-            let nbv = this.cost - this.getMonthlyDepreciation * this.getAccountingMonths;
+            let nbv = this.costs.cfwd - this.deprec.cfwd;
 
             return this.round(nbv);
         },
@@ -95,12 +167,8 @@ export default {
             return this.round(1 / this.getYears);
         },
 
-        getAnnualDepreciation() {
-            let cost = this.cost;
-            let percentage = this.getPercentage;
-            let annual_depreciation = cost * percentage;
-
-            return this.round(annual_depreciation);
+        getDepreciationCharges() {
+            return this.deprec.charges = this.round(this.costs.cfwd * this.getPercentage)
         },
 
         getMonthlyDepreciation() {
@@ -111,8 +179,16 @@ export default {
             return monthly_depreciation;
         },
 
+        getCostsCfwd() {
+            return this.costs.cfwd = this.round(this.costs.bfwd + this.costs.additions - this.costs.disposals);
+        },
+
+        getDeprecCfwd() {
+            return this.deprec.cfwd = this.round(this.deprec.bfwd + this.deprec.charges - this.deprec.disposals);
+        },
+
         getTransferredCost() {
-            let nbv = this.cost - ((this.getAnnualDepreciation / 12) * this.getTransferMonths);
+            let nbv = this.cost - ((this.getDepreciationCharges / 12) * this.getTransferMonths);
 
             return this.round(nbv);
         },
