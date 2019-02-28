@@ -1,7 +1,7 @@
 export default {
     template: `
         <div>
-            <h4 class="my-4">Heath Park</h4>
+            <h4 class="my-4">School A</h4>
             <hr>
             <div class="form-group">
                 <label>Accounting End Date</label>
@@ -35,7 +35,7 @@ export default {
                 <label>Net Book Value</label>
                 <input class="form-control" type="text" :value="getNetBookValue" disabled>
             </div>
-            <h4 class="my-4">Moseley Park</h4>
+            <h4 class="my-4">School B</h4>
             <hr>
             <div class="form-group">
                 <label>Transfer Date</label>
@@ -51,10 +51,10 @@ export default {
     data() {
         return {
             cost: '5425.93',
-            start: '2017-05-19',
-            end: '2020-05-19',
-            account_end: '2017-08-31',
-            transfer: '2017-08-19',
+            start: '2019-05-19',
+            end: '2022-05-19',
+            account_end: '2019-08-31',
+            transfer: '2019-08-19',
         }
     },
 
