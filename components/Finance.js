@@ -1,6 +1,8 @@
 export default {
     template: `
         <div>
+            <h4 class="my-4">Heath Park</h4>
+            <hr>
             <div class="form-group">
                 <label>Accounting End Date</label>
                 <input class="form-control" type="date" v-model="account_end">
@@ -33,13 +35,15 @@ export default {
                 <label>Net Book Value</label>
                 <input class="form-control" type="text" :value="getNetBookValue" disabled>
             </div>
+            <h4 class="my-4">Moseley Park</h4>
+            <hr>
             <div class="form-group">
                 <label>Transfer Date</label>
                 <input class="form-control" type="date" v-model="transfer">
             </div>
             <div class="form-group">
-                <label>Transferred Net Book Value</label>
-                <input class="form-control" type="text" :value="getTransferredNetBookValue" disabled>
+                <label>Transferred Cost</label>
+                <input class="form-control" type="text" :value="getTransferredCost" disabled>
             </div>
         </div>
     `,
@@ -113,7 +117,7 @@ export default {
             return monthly_depreciation;
         },
 
-        getTransferredNetBookValue() {
+        getTransferredCost() {
             let nbv = this.cost - ((this.getAnnualDepreciation / 12) * this.getTransferMonths);
 
             return this.round(nbv);
