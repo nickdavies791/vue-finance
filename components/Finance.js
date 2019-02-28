@@ -22,8 +22,8 @@ export default {
                 <input class="form-control" type="text" :value="getPercentage" disabled>
             </div>
             <div class="form-group">
-                <label>Net Book Value</label>
-                <input class="form-control" type="text" :value="getYearlyNetBookValue" disabled>
+                <label>Annual Depreciation</label>
+                <input class="form-control" type="text" :value="getAnnualDepreciation" disabled>
             </div>
             <div class="form-group">
                 <label>Transferred Net Book Value</label>
@@ -62,7 +62,7 @@ export default {
             return this.round(percentage);
         },
 
-        getYearlyNetBookValue() {
+        getAnnualDepreciation() {
             let cost = this.cost;
             let percentage = this.getPercentage;
             let nbv = cost * percentage;
@@ -74,7 +74,7 @@ export default {
             let start = moment(this.start);
             let end = moment(this.transfer);
             let months = end.diff(start, 'months');
-            let nbv = this.cost - ((this.getYearlyNetBookValue / 12) * months);
+            let nbv = this.cost - ((this.getAnnualDepreciation / 12) * months);
 
             return this.round(nbv);
         },
