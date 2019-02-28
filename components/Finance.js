@@ -8,7 +8,7 @@ export default {
                 <input class="form-control" type="date" v-model="account_end">
             </div>
             <div class="form-group">
-                <label>Purchase Price</label>
+                <label>Purchase Cost</label>
                 <input class="form-control" type="text" v-model="cost">
             </div>
             <div class="form-group">
@@ -18,10 +18,6 @@ export default {
             <div class="form-group">
                 <label>End Date</label>
                 <input class="form-control" type="date" v-model="end">
-            </div>
-            <div class="form-group">
-                <label>Percentage Depreciation</label>
-                <input class="form-control" type="text" :value="getPercentage" disabled>
             </div>
             <div class="form-group">
                 <label>Annual Depreciation</label>
