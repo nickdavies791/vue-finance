@@ -96,9 +96,7 @@ export default {
         },
 
         getPercentage() {
-            let percentage = (1 / this.getYears);
-
-            return this.round(percentage);
+            return this.round(1 / this.getYears);
         },
 
         getAnnualDepreciation() {
