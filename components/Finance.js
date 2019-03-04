@@ -133,7 +133,6 @@ export default {
             lifetime_end_date: '2022-05-01',
             transfer_date: '2019-10-01',
             isTransferred: false,
-            accounting_months: '',
             costs: {
                 bfwd: '5425.93',
                 additions: '0',
@@ -189,23 +188,23 @@ export default {
         getAccountingMonths() {
             let start = moment(this.purchase_date);
             let end = moment(this.account_end);
+            let months = end.diff(start, 'months');
 
             if (this.isTransferred) {
                 end = moment(this.transfer_date)
             }
 
             if (end.diff(start, 'months') <= 12 ) {
-                this.accounting_months = end.diff(start, 'months');
+                months = end.diff(start, 'months');
             }
 
             if (end.diff(start, 'months') >= 12) {
                 start = moment(this.account_start);
                 end = moment(this.account_end);
-                this.accounting_months = end.diff(start, 'months');
-
+                months = end.diff(start, 'months');
             }
 
-            return this.accounting_months;
+            return months;
         },
 
         getNetBookValue() {
