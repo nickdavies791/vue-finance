@@ -131,7 +131,7 @@ export default {
             account_end: '2019-09-01',
             purchase_date: '2019-05-01',
             lifetime_end_date: '2022-05-01',
-            transfer_date: '2019-10-01',
+            transfer_date: '2019-06-01',
             isTransferred: false,
             costs: {
                 bfwd: '5425.93',
@@ -188,21 +188,23 @@ export default {
         getAccountingMonths() {
             let start = moment(this.purchase_date);
             let end = moment(this.account_end);
-            let months = end.diff(start, 'months');
 
             if (this.isTransferred) {
                 end = moment(this.transfer_date)
             }
 
-            if (end.diff(start, 'months') <= 12 ) {
-                months = end.diff(start, 'months');
-            }
-
             if (end.diff(start, 'months') >= 12) {
                 start = moment(this.account_start);
-                end = moment(this.account_end);
-                months = end.diff(start, 'months');
             }
+
+            if (end.diff(moment(this.lifetime_end_date), 'months') <= 12 & end.diff(moment(this.lifetime_end_date), 'months') >= 0) {
+                if (this.isTransferred) {
+                    start = moment(this.transfer_date)
+                }
+                end = moment(this.lifetime_end_date);
+            }
+
+            let months = end.diff(start, 'months');
 
             return months;
         },
