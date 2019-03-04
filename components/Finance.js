@@ -174,13 +174,7 @@ export default {
         getDepreciationCharges() {
             return this.deprec.charges = this.round(((this.costs.cfwd * this.getPercentage) / 12) * this.getAccountingMonths);
         },
-
-        getMonthlyDepreciationCharges() {
-            let monthly = this.getDepreciationCharges / 12;
-
-            return monthly;
-        },
-
+        
         getDeprecCfwd() {
             return this.deprec.cfwd = this.round(parseFloat(this.deprec.bfwd) + parseFloat(this.deprec.charges) - parseFloat(this.deprec.disposals));
         },
