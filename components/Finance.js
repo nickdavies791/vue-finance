@@ -72,28 +72,22 @@ export default {
             <h5>Depreciation</h5>
             <hr>
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Depreciation Brought Forward</label>
-                        <input class="form-control" type="text" v-model="deprec.bfwd">
-                    </div>                
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Charges</label>
-                        <input class="form-control" type="text" :value="getDepreciationCharges">
+                        <input class="form-control" type="text" :value="getDepreciationCharges" disabled>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Disposals</label>
                         <input class="form-control" type="text" v-model="deprec.disposals">
                     </div>                
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Depreciation Carried Forward</label>
-                        <input class="form-control" type="text" :value="getDeprecCfwd">
+                        <input class="form-control" type="text" :value="getDeprecCfwd" disabled>
                     </div>
                 </div>
             </div><br />
@@ -140,7 +134,6 @@ export default {
                 cfwd: '0'
             },
             deprec: {
-                bfwd: '0',
                 charges: '0',
                 disposals: '0',
                 cfwd: '0'
@@ -174,9 +167,9 @@ export default {
         getDepreciationCharges() {
             return this.deprec.charges = this.round(((this.costs.cfwd * this.getPercentage) / 12) * this.getAccountingMonths);
         },
-        
+
         getDeprecCfwd() {
-            return this.deprec.cfwd = this.round(parseFloat(this.deprec.bfwd) + parseFloat(this.deprec.charges) - parseFloat(this.deprec.disposals));
+            return this.deprec.cfwd = this.round(parseFloat(this.deprec.charges) - parseFloat(this.deprec.disposals));
         },
 
         getAccountingMonths() {
