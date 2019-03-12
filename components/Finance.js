@@ -41,58 +41,26 @@ export default {
                     </div>
                 </div>
             </div><br />
-            <h5>Costs</h5>
-            <hr>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Costs Brought Forward</label>
-                        <input class="form-control" type="number" v-model="costs.bfwd">
-                    </div>                
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Additions</label>
-                        <input class="form-control" type="number" v-model="costs.additions">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Disposals</label>
-                        <input class="form-control" type="number" v-model="costs.disposals">
-                    </div>                
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Costs Carried Forward</label>
-                        <input class="form-control" type="number" v-model="getCostsCfwd">
-                    </div>
-                </div>
-            </div><br />
             <h5>Depreciation</h5>
             <hr>
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Current Value</label>
+                        <input class="form-control" type="number" v-model="costs.value">
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         <label>Charges</label>
                         <input class="form-control" type="text" :value="getDepreciationCharges" disabled>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Disposals</label>
-                        <input class="form-control" type="text" v-model="deprec.disposals">
-                    </div>                
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label>Depreciation Carried Forward</label>
-                        <input class="form-control" type="text" :value="getDeprecCfwd" disabled>
-                    </div>
-                </div>
             </div><br />
+            <h5>Net Book Value</h5>
+            <hr>
             <div class="form-group">
-                <label>Net Book Value</label>
+                <label>Value at end of accounting period</label>
                 <input class="form-control" type="text" :value="getNetBookValue" disabled>
             </div><br />
             <h5>Transfer Ownership</h5>
@@ -128,15 +96,10 @@ export default {
             transfer_date: '2019-06-01',
             isTransferred: false,
             costs: {
-                bfwd: '5425.93',
-                additions: '0',
-                disposals: '0',
-                cfwd: '0'
+                value: '5425.93',
             },
             deprec: {
                 charges: '0',
-                disposals: '0',
-                cfwd: '0'
             }
         }
     },
@@ -160,16 +123,8 @@ export default {
             return this.round(1 / this.getYears);
         },
 
-        getCostsCfwd() {
-            return this.costs.cfwd = this.round(parseFloat(this.costs.bfwd) + parseFloat(this.costs.additions) - parseFloat(this.costs.disposals));
-        },
-
         getDepreciationCharges() {
-            return this.deprec.charges = this.round(((this.costs.cfwd * this.getPercentage) / 12) * this.getAccountingMonths);
-        },
-
-        getDeprecCfwd() {
-            return this.deprec.cfwd = this.round(parseFloat(this.deprec.charges) - parseFloat(this.deprec.disposals));
+            return this.deprec.charges = this.round(((this.costs.value * this.getPercentage) / 12) * this.getAccountingMonths);
         },
 
         getAccountingMonths() {
@@ -197,7 +152,7 @@ export default {
         },
 
         getNetBookValue() {
-            let nbv = parseFloat(this.costs.cfwd) - parseFloat(this.deprec.cfwd);
+            let nbv = parseFloat(this.costs.value) - parseFloat(this.deprec.charges);
 
             return this.round(nbv);
         },
