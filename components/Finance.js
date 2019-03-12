@@ -19,7 +19,7 @@ export default {
             </div>
             <div class="form-group">
                 <label>Purchase Cost</label>
-                <input class="form-control" type="text" v-model="cost">
+                <input class="form-control" type="number" step="0.01" v-model="cost">
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -37,7 +37,7 @@ export default {
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Lifetime (Years)</label>
-                        <input class="form-control" type="number" :value="getYears" disabled>
+                        <input class="form-control" type="number" step="0.01" :value="getYears" disabled>
                     </div>
                 </div>
             </div><br />
@@ -47,13 +47,13 @@ export default {
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Current Value</label>
-                        <input class="form-control" type="number" v-model="costs.value">
+                        <input class="form-control" type="number" step="0.01" v-model="costs.value">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Charges</label>
-                        <input class="form-control" type="text" :value="getDepreciationCharges" disabled>
+                        <input class="form-control" type="number" step="0.01" :value="getDepreciationCharges" disabled>
                     </div>
                 </div>
             </div><br />
@@ -61,7 +61,8 @@ export default {
             <hr>
             <div class="form-group">
                 <label>Value at end of accounting period</label>
-                <input class="form-control" type="text" :value="getNetBookValue" disabled>
+                <input class="form-control" type="number" step="0.01" :value="getNetBookValue" disabled>
+                <span v-if="isTransferred" style="color:red;">Disposed</span>
             </div><br />
             <h5>Transfer Ownership</h5>
             <hr>
@@ -80,7 +81,7 @@ export default {
                 </div>
                 <div class="form-group">
                     <label>Transferred Cost</label>
-                    <input class="form-control" type="text" :value="getTransferredCost" disabled>
+                    <input class="form-control" type="number" step="0.01" :value="getTransferredCost" disabled>
                 </div>
             </div>
         </div>
@@ -154,11 +155,15 @@ export default {
         getNetBookValue() {
             let nbv = parseFloat(this.costs.value) - parseFloat(this.deprec.charges);
 
+            if (this.isTransferred) {
+                nbv = 0;
+            }
+
             return this.round(nbv);
         },
 
         getTransferredCost() {
-            return this.getNetBookValue
+            return parseFloat(this.costs.value) - parseFloat(this.deprec.charges);
         },
     }
 }
